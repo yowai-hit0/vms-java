@@ -5,9 +5,10 @@ import com.rw.rra.vms.ownership.DTO.TransferResponseDTO;
 import org.mapstruct.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = LocalDate.class)
 public interface TransferMapper {
 
     @Mapping(target = "id", ignore = true)
@@ -16,7 +17,7 @@ public interface TransferMapper {
     @Mapping(target = "oldPlate", ignore = true)
     @Mapping(target = "toOwner", ignore = true)
     @Mapping(target = "newPlate", ignore = true)
-    @Mapping(target = "transferDate", expression = "java(LocalDate.now())")
+    @Mapping(target = "transferDate", expression = "java(java.time.LocalDate.now())")
     OwnershipTransfer toEntity(TransferRequestDTO dto);
 
     @Mapping(target = "vehicleId",   source = "vehicle.id")

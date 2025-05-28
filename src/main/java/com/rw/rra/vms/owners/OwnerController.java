@@ -2,6 +2,7 @@ package com.rw.rra.vms.owners;
 
 import com.rw.rra.vms.owners.DTO.OwnerRequestDTO;
 import com.rw.rra.vms.owners.DTO.OwnerResponseDTO;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,8 @@ public class OwnerController {
 
     @GetMapping
     public ResponseEntity<Page<OwnerResponseDTO>> listOwners(
+            @Parameter(description = "Pagination and sorting parameters",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Pageable.class))
             Pageable pageable) {
         log.info("Received listOwners request");
         return ResponseEntity.ok(service.listAll(pageable));

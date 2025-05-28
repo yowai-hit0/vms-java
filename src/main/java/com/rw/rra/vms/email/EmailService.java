@@ -123,7 +123,7 @@ public class EmailService {
             helper.setSubject(type == OtpType.VERIFY_ACCOUNT
                     ? "Verify your account - One Time Password (OTP)"
                     : "Reset your password - One Time Password (OTP)");
-            helper.setFrom("noreply@rra.com");
+            helper.setFrom("ybarasingiz@zohomail.com");
             mailSender.send(msg);
         } catch (MessagingException e) {
             log.error("Unable to send OTP email", e);
@@ -143,7 +143,7 @@ public class EmailService {
             helper.setText(html, true);
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setFrom("noreply@rra.com");
+            helper.setFrom("ybarasingiz@zohomail.com");
             mailSender.send(msg);
         } catch (MessagingException e) {
             log.error("Unable to send success email", e);
@@ -159,7 +159,7 @@ public class EmailService {
             helper.setText(html, true);
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setFrom("noreply@rra.com");
+            helper.setFrom("ybarasingiz@zohomail.com");
             mailSender.send(msg);
         } catch (MessagingException e) {
             log.error("Failed to send email [{}] to {}", subject, to, e);

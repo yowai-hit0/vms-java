@@ -4,6 +4,7 @@ import com.rw.rra.vms.files.CsvService;
 import com.rw.rra.vms.files.ExcelService;
 import com.rw.rra.vms.vehicles.DTO.VehicleRequestDTO;
 import com.rw.rra.vms.vehicles.DTO.VehicleResponseDTO;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.*;
@@ -42,6 +43,8 @@ public class VehicleController {
 
     @GetMapping
     public ResponseEntity<Page<VehicleResponseDTO>> list(
+            @Parameter(description = "Pagination and sorting parameters",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Pageable.class))
             Pageable pageable) {
 //        log.info("Received list vehicles");
         return ResponseEntity.ok(service.listAll(pageable));

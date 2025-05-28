@@ -25,12 +25,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
+    private static final String[] SKIP_PATHS = {
+            "/api/v1/auth/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/webjars/**"
+    };
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        for (String skipPath : SKIP_PATHS) {
+            if (path.startsWith(skipPath.replace("/**", ""))) {
+                return true; // Skip the filter for these paths
+            }
+        }
+        return false;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String path = request.getServletPath();
-        if (path.startsWith("/api/v1/auth/")) {
+
+        if (shouldNotFilter(request)) {
             filterChain.doFilter(request, response);
             return;
         }

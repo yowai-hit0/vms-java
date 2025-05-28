@@ -6,6 +6,7 @@ import com.rw.rra.vms.users.DTO.UserMapper;
 import com.rw.rra.vms.users.DTO.UserResponseDTO;
 
 import com.rw.rra.vms.vehicles.VehicleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +22,9 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-
+@Slf4j
 public class UserService {
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+//    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final VehicleRepository vehicleRepository;
@@ -36,7 +37,7 @@ public class UserService {
 
         var newUser = userMapper.toEntity(user);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        newUser.setRole(Role.ROLE_STANDARD);
+        newUser.setRole(Role.ROLE_ADMIN);
         newUser.setEnabled(false);
 
         userRepository.save(newUser);
