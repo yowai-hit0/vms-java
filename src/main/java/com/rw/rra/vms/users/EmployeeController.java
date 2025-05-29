@@ -14,7 +14,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
-public class UserController {
+public class EmployeeController {
 
     private final UserService userService;
 
@@ -36,25 +36,14 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
 
-    @GetMapping("/paged")
+
+    @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Page<UserResponseDTO>> getAllUsersPaged(Pageable pageable) {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
-    @GetMapping("/role/{role}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Page<UserResponseDTO>> getUsersByRole(
-            @PathVariable Role role,
-            Pageable pageable) {
-        return ResponseEntity.ok(userService.getUsersByRole(role, pageable));
-    }
 
     @GetMapping("/status/{status}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -72,11 +61,17 @@ public class UserController {
         return ResponseEntity.ok(userService.searchUsersByName(name, pageable));
     }
 
-    @PatchMapping("/{id}/status")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> updateUserStatus(@PathVariable UUID id, @RequestBody UserStatus status) {
-        // This would require adding a method to UserService to update user status by ID
-        // For now, we'll return 501 Not Implemented
-        return ResponseEntity.status(501).body("Not implemented yet");
-    }
+//    @PatchMapping("/{id}/status")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    public ResponseEntity<?> updateUserStatus(@PathVariable UUID id, @RequestBody UserStatus status) {
+//        // This would require adding a method to UserService to update user status by ID
+//        // For now, we'll return 501 Not Implemented
+//        return ResponseEntity.status(501).body("Not implemented yet");
+//    }
+
+    //@GetMapping
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    //public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+    //    return ResponseEntity.ok(userService.getAllUsers());
+    //}
 }

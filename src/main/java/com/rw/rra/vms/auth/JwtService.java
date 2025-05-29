@@ -32,7 +32,7 @@ public class JwtService {
         var claims = Jwts.claims()
                 .subject(user.getId().toString())
                 .add("email", user.getEmail())
-                .add("phoneNumber", user.getPhoneNumber())
+                .add("mobile", user.getMobile())
                 .add("role", user.getRole())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration))

@@ -21,13 +21,13 @@ public class DeductionController {
 
     private final DeductionService deductionService;
 
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE')")
-    public ResponseEntity<List<DeductionResponseDTO>> getAllDeductions() {
-        return ResponseEntity.ok(deductionService.getAllDeductions());
-    }
+//    @GetMapping
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE')")
+//    public ResponseEntity<List<DeductionResponseDTO>> getAllDeductions() {
+//        return ResponseEntity.ok(deductionService.getAllDeductions());
+//    }
 
-    @GetMapping("/paged")
+    @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE')")
     public ResponseEntity<Page<DeductionResponseDTO>> getAllDeductionsPaged(Pageable pageable) {
         return ResponseEntity.ok(deductionService.getAllDeductions(pageable));
@@ -45,13 +45,13 @@ public class DeductionController {
         return ResponseEntity.ok(deductionService.getDeductionByName(name));
     }
 
-    @GetMapping("/search/{name}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE')")
-    public ResponseEntity<Page<DeductionResponseDTO>> searchDeductionsByName(
-            @PathVariable String name,
-            Pageable pageable) {
-        return ResponseEntity.ok(deductionService.getDeductionsByNameContaining(name, pageable));
-    }
+//    @GetMapping("/search/{name}")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE')")
+//    public ResponseEntity<Page<DeductionResponseDTO>> searchDeductionsByName(
+//            @PathVariable String name,
+//            Pageable pageable) {
+//        return ResponseEntity.ok(deductionService.getDeductionsByNameContaining(name, pageable));
+//    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
@@ -80,7 +80,7 @@ public class DeductionController {
     }
 
     @PostMapping("/initialize")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     public ResponseEntity<Void> initializeDefaultDeductions() {
         deductionService.initializeDefaultDeductions();
         return ResponseEntity.ok().build();

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "employees")
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class User implements UserDetails {
     @Id @GeneratedValue
@@ -28,10 +28,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column(nullable=false, unique=true, length=10)
-    private String phoneNumber;
-
-    @Column(nullable=false, unique=true, length=16)
-    private String nationalId;
+    private String mobile;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable=false, length=20)
@@ -39,8 +36,6 @@ public class User implements UserDetails {
 
     private boolean enabled = false;
 
-    private String verificationToken;
-    private String resetToken;
 
     private LocalDate dateOfBirth;
 

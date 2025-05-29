@@ -21,13 +21,13 @@ public class EmploymentController {
 
     private final EmploymentService employmentService;
 
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<List<EmploymentResponseDTO>> getAllEmployments() {
-        return ResponseEntity.ok(employmentService.getAllEmployments());
-    }
+//    @GetMapping
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+//    public ResponseEntity<List<EmploymentResponseDTO>> getAllEmployments() {
+//        return ResponseEntity.ok(employmentService.getAllEmployments());
+//    }
 
-    @GetMapping("/paged")
+    @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     public ResponseEntity<Page<EmploymentResponseDTO>> getAllEmploymentsPaged(Pageable pageable) {
         return ResponseEntity.ok(employmentService.getAllEmployments(pageable));
@@ -45,13 +45,13 @@ public class EmploymentController {
         return ResponseEntity.ok(employmentService.getEmploymentsByEmployee(employeeId));
     }
 
-    @GetMapping("/employee/{employeeId}/paged")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE')")
-    public ResponseEntity<Page<EmploymentResponseDTO>> getEmploymentsByEmployeePaged(
-            @PathVariable UUID employeeId,
-            Pageable pageable) {
-        return ResponseEntity.ok(employmentService.getEmploymentsByEmployee(employeeId, pageable));
-    }
+//    @GetMapping("/employee/{employeeId}/paged")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE')")
+//    public ResponseEntity<Page<EmploymentResponseDTO>> getEmploymentsByEmployeePaged(
+//            @PathVariable UUID employeeId,
+//            Pageable pageable) {
+//        return ResponseEntity.ok(employmentService.getEmploymentsByEmployee(employeeId, pageable));
+//    }
 
     @GetMapping("/active")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
@@ -59,11 +59,11 @@ public class EmploymentController {
         return ResponseEntity.ok(employmentService.getActiveEmployments());
     }
 
-    @GetMapping("/active/paged")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<Page<EmploymentResponseDTO>> getActiveEmploymentsPaged(Pageable pageable) {
-        return ResponseEntity.ok(employmentService.getActiveEmployments(pageable));
-    }
+//    @GetMapping("/active/paged")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+//    public ResponseEntity<Page<EmploymentResponseDTO>> getActiveEmploymentsPaged(Pageable pageable) {
+//        return ResponseEntity.ok(employmentService.getActiveEmployments(pageable));
+//    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")

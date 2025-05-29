@@ -47,24 +47,24 @@ public class EmploymentService {
         return employmentMapper.toResponseDTOList(employmentRepository.findByEmployee(employee));
     }
 
-    @Transactional(readOnly = true)
-    public Page<EmploymentResponseDTO> getEmploymentsByEmployee(UUID employeeId, Pageable pageable) {
-        User employee = userRepository.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
-        return employmentRepository.findByEmployee(employee, pageable)
-                .map(employmentMapper::toResponseDTO);
-    }
+//    @Transactional(readOnly = true)
+//    public Page<EmploymentResponseDTO> getEmploymentsByEmployee(UUID employeeId, Pageable pageable) {
+//        User employee = userRepository.findById(employeeId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
+//        return employmentRepository.findByEmployee(employee, pageable)
+//                .map(employmentMapper::toResponseDTO);
+//    }
 
     @Transactional(readOnly = true)
     public List<EmploymentResponseDTO> getActiveEmployments() {
         return employmentMapper.toResponseDTOList(employmentRepository.findByStatus(EmploymentStatus.ACTIVE));
     }
 
-    @Transactional(readOnly = true)
-    public Page<EmploymentResponseDTO> getActiveEmployments(Pageable pageable) {
-        return employmentRepository.findByStatus(EmploymentStatus.ACTIVE, pageable)
-                .map(employmentMapper::toResponseDTO);
-    }
+//    @Transactional(readOnly = true)
+//    public Page<EmploymentResponseDTO> getActiveEmployments(Pageable pageable) {
+//        return employmentRepository.findByStatus(EmploymentStatus.ACTIVE, pageable)
+//                .map(employmentMapper::toResponseDTO);
+//    }
 
     @Transactional
     public EmploymentResponseDTO createEmployment(EmploymentRequestDTO employmentDTO) {

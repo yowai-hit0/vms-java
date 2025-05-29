@@ -26,10 +26,10 @@ public class MessageService {
     private final MessageMapper messageMapper;
     private final EmailService emailService;
 
-    @Transactional(readOnly = true)
-    public List<MessageResponseDTO> getAllMessages() {
-        return messageMapper.toResponseDTOList(messageRepository.findAll());
-    }
+//    @Transactional(readOnly = true)
+//    public List<MessageResponseDTO> getAllMessages() {
+//        return messageMapper.toResponseDTOList(messageRepository.findAll());
+//    }
 
     @Transactional(readOnly = true)
     public Page<MessageResponseDTO> getAllMessages(Pageable pageable) {
@@ -51,13 +51,13 @@ public class MessageService {
         return messageMapper.toResponseDTOList(messageRepository.findByEmployee(employee));
     }
 
-    @Transactional(readOnly = true)
-    public Page<MessageResponseDTO> getMessagesByEmployee(UUID employeeId, Pageable pageable) {
-        User employee = userRepository.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
-        return messageRepository.findByEmployee(employee, pageable)
-                .map(messageMapper::toResponseDTO);
-    }
+//    @Transactional(readOnly = true)
+//    public Page<MessageResponseDTO> getMessagesByEmployee(UUID employeeId, Pageable pageable) {
+//        User employee = userRepository.findById(employeeId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
+//        return messageRepository.findByEmployee(employee, pageable)
+//                .map(messageMapper::toResponseDTO);
+//    }
 
     @Transactional(readOnly = true)
     public List<MessageResponseDTO> getMessagesByEmployeeAndMonthAndYear(UUID employeeId, Integer month, Integer year) {
@@ -66,27 +66,27 @@ public class MessageService {
         return messageMapper.toResponseDTOList(messageRepository.findByEmployeeAndMonthAndYear(employee, month, year));
     }
 
-    @Transactional(readOnly = true)
-    public Page<MessageResponseDTO> getMessagesByEmployeeAndMonthAndYear(UUID employeeId, Integer month, Integer year, Pageable pageable) {
-        User employee = userRepository.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
-        return messageRepository.findByEmployeeAndMonthAndYear(employee, month, year, pageable)
-                .map(messageMapper::toResponseDTO);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<MessageResponseDTO> getMessagesBySent(boolean sent, Pageable pageable) {
-        return messageRepository.findBySent(sent, pageable)
-                .map(messageMapper::toResponseDTO);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<MessageResponseDTO> getMessagesByEmployeeAndSent(UUID employeeId, boolean sent, Pageable pageable) {
-        User employee = userRepository.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
-        return messageRepository.findByEmployeeAndSent(employee, sent, pageable)
-                .map(messageMapper::toResponseDTO);
-    }
+//    @Transactional(readOnly = true)
+//    public Page<MessageResponseDTO> getMessagesByEmployeeAndMonthAndYear(UUID employeeId, Integer month, Integer year, Pageable pageable) {
+//        User employee = userRepository.findById(employeeId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
+//        return messageRepository.findByEmployeeAndMonthAndYear(employee, month, year, pageable)
+//                .map(messageMapper::toResponseDTO);
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public Page<MessageResponseDTO> getMessagesBySent(boolean sent, Pageable pageable) {
+//        return messageRepository.findBySent(sent, pageable)
+//                .map(messageMapper::toResponseDTO);
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public Page<MessageResponseDTO> getMessagesByEmployeeAndSent(UUID employeeId, boolean sent, Pageable pageable) {
+//        User employee = userRepository.findById(employeeId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
+//        return messageRepository.findByEmployeeAndSent(employee, sent, pageable)
+//                .map(messageMapper::toResponseDTO);
+//    }
 
     @Transactional
     public MessageResponseDTO createMessage(MessageRequestDTO messageDTO) {

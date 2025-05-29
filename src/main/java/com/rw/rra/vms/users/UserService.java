@@ -33,8 +33,8 @@ public class UserService {
 
 
     public UserResponseDTO createUser(RegisterRequestDTO user) {
-        if(userRepository.existsByEmailOrPhoneNumberOrNationalId(user.getEmail(), user.getPhoneNumber(), user.getNationalId()))
-            throw new BadRequestException("User with this email or nationalId or phone number already exists.");
+        if(userRepository.existsByEmailOrMobile(user.getEmail(), user.getMobile()))
+            throw new BadRequestException("User with this email or mobile already exists.");
 
         var newUser = userMapper.toEntity(user);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -96,12 +96,6 @@ public class UserService {
         return userMapper.toResponseDto(getAuthenticatedUser());
     }
 
-    @Transactional(readOnly = true)
-    public List<UserResponseDTO> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(userMapper::toResponseDto)
-                .toList();
-    }
 
     @Transactional(readOnly = true)
     public Page<UserResponseDTO> getAllUsers(Pageable pageable) {
@@ -109,11 +103,6 @@ public class UserService {
                 .map(userMapper::toResponseDto);
     }
 
-    @Transactional(readOnly = true)
-    public Page<UserResponseDTO> getUsersByRole(Role role, Pageable pageable) {
-        return userRepository.findByRole(role, pageable)
-                .map(userMapper::toResponseDto);
-    }
 
     @Transactional(readOnly = true)
     public Page<UserResponseDTO> getUsersByStatus(UserStatus status, Pageable pageable) {
@@ -128,5 +117,11 @@ public class UserService {
     }
 
 
+    //    @Transactional(readOnly = true)
+//    public List<UserResponseDTO> getAllUsers() {
+//        return userRepository.findAll().stream()
+//                .map(userMapper::toResponseDto)
+//                .toList();
+//    }
 
 }

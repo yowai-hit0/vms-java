@@ -7,7 +7,7 @@ DECLARE
 BEGIN
     -- Get employee details
     SELECT u.first_name, u.email INTO employee_first_name, employee_email
-    FROM users u
+    FROM employees u
     WHERE u.id = NEW.employee_id;
 
     -- Create message for notification

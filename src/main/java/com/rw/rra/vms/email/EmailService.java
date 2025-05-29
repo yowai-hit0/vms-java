@@ -40,73 +40,14 @@ public class EmailService {
     }
 
 
-    @Async
-    public void sendUserRegisteredEmail(String to, String name, String plateNumber) {
-        Context ctx = new Context();
-        ctx.setVariable("name", name);
-        ctx.setVariable("plateNumber", plateNumber);
-        ctx.setVariable("companyName", "Rwanda Revenue Authority");
-        sendEmail("owner_registered", ctx, to, "Welcome to RRA Vehicle Management");
-    }
 
-    @Async
-    public void sendPlateCreatedEmail(String to, String name, String plateNumber) {
-        Context ctx = new Context();
-        ctx.setVariable("name", name);
-        ctx.setVariable("plateNumber", plateNumber);
-        ctx.setVariable("companyName", "Rwanda Revenue Authority");
-        sendEmail("plate_created", ctx, to, "Your Plate Number Has Been Created");
-    }
-
-    @Async
-    public void sendPlateAssignedEmail(String to, String name, String plateNumber, String vehicleDetails) {
-        Context ctx = new Context();
-        ctx.setVariable("name", name);
-        ctx.setVariable("plateNumber", plateNumber);
-        ctx.setVariable("vehicleDetails", vehicleDetails);
-        ctx.setVariable("companyName", "Rwanda Revenue Authority");
-        sendEmail("plate_assigned", ctx, to, "Your Plate Has Been Assigned to a Vehicle");
-    }
-
-    @Async
-    public void sendOwnershipTransferEmailToSender(String to, String name, String plateNumber,
-                                                   Double amount, String newOwnerFirst, String newOwnerLast) {
-        Context ctx = new Context();
-        ctx.setVariable("name", name);
-        ctx.setVariable("plateNumber", plateNumber);
-        ctx.setVariable("amount", amount);
-        ctx.setVariable("newOwner", newOwnerFirst + " " + newOwnerLast);
-        ctx.setVariable("companyName", "Rwanda Revenue Authority");
-        sendEmail("ownership_transferred_sender", ctx, to, "Vehicle Ownership Transferred");
-    }
-
-    @Async
-    public void sendOwnershipTransferEmailToReceiver(String to, String name, String plateNumber,
-                                                     Double amount, String prevOwnerFirst, String prevOwnerLast) {
-        Context ctx = new Context();
-        ctx.setVariable("name", name);
-        ctx.setVariable("plateNumber", plateNumber);
-        ctx.setVariable("amount", amount);
-        ctx.setVariable("previousOwner", prevOwnerFirst + " " + prevOwnerLast);
-        ctx.setVariable("companyName", "Rwanda Revenue Authority");
-        sendEmail("ownership_transferred_receiver", ctx, to, "You Received a Vehicle Ownership");
-    }
-
-    @Async
-    public void sendPostInspectionNotification(String to, String name, String plateNumber) {
-        Context ctx = new Context();
-        ctx.setVariable("name", name);
-        ctx.setVariable("plateNumber", plateNumber);
-        ctx.setVariable("companyName", "Rwanda Revenue Authority");
-        sendEmail("post_inspection_notification", ctx, to, "Vehicle Inspection Update");
-    }
 
     @Async
     public void sendSalaryNotification(String to, String name, String message) {
         Context ctx = new Context();
         ctx.setVariable("name", name);
         ctx.setVariable("message", message);
-        ctx.setVariable("companyName", "Rwanda Revenue Authority");
+        ctx.setVariable("companyName", "Government of Rwanda");
         sendEmail("salary_notification", ctx, to, "Salary Notification");
     }
 
@@ -116,7 +57,7 @@ public class EmailService {
             Context ctx = new Context();
             ctx.setVariable("name", name);
             ctx.setVariable("otp", otp);
-            ctx.setVariable("companyName", "Rwanda Revenue Authority");
+            ctx.setVariable("companyName", "Government of Rwanda");
             ctx.setVariable("expirationTime", "10 minutes");
 
             String template = switch (type) {
@@ -144,7 +85,7 @@ public class EmailService {
         try {
             Context ctx = new Context();
             ctx.setVariable("name", name);
-            ctx.setVariable("companyName", "Rwanda Revenue Authority");
+            ctx.setVariable("companyName", "Government of Rwanda");
 
             MimeMessage msg = mailSender.createMimeMessage();
             var helper = new MimeMessageHelper(msg, MimeMessageHelper.MULTIPART_MODE_MIXED);

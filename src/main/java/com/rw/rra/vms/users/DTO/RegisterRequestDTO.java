@@ -27,12 +27,8 @@ public class RegisterRequestDTO {
     String email;
 
     @NotBlank(message = "Phone number is required.")
-//    @ValidRwandanPhoneNumber
-    String phoneNumber;
+    String mobile;
 
-    @NotBlank(message = "National ID is required.")
-//    @ValidRwandaId
-    String nationalId;
 
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 250, message = "Password must be at least 8 characters long")

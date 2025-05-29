@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 public interface UserMapper {
     @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "status", constant = "ACTIVE")
-    @Mapping(target = "verificationToken", ignore = true)
-    @Mapping(target = "resetToken", ignore = true)
     User toEntity(RegisterRequestDTO userDto);
 
     UserResponseDTO toResponseDto(User user);

@@ -4,12 +4,16 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import org.springdoc.core.customizers.OpenApiCustomizer;
+import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.HandlerMethod;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -65,23 +69,25 @@ public class OpenApiConfig {
                                                         .description("Page number (0-based)")
                                                         .required(false)
                                                         .schema(new io.swagger.v3.oas.models.media.IntegerSchema()
-                                                                ._default(0)
-                                                                .minimum(BigDecimal.ZERO)))
+                                                                ._default(new BigDecimal("0"))
+                                                                .minimum(new BigDecimal("0")))
+                                                        .example("0"))
                                                 .addParametersItem(new Parameter()
                                                         .name("size")
                                                         .in("query")
                                                         .description("Number of items per page")
                                                         .required(false)
                                                         .schema(new io.swagger.v3.oas.models.media.IntegerSchema()
-                                                                ._default(20)
-                                                                .minimum(BigDecimal.ONE)))
+                                                                ._default(new BigDecimal("20"))
+                                                                .minimum(new BigDecimal("1")))
+                                                        .example("20"))
                                                 .addParametersItem(new Parameter()
                                                         .name("sort")
                                                         .in("query")
-                                                        .description("Sort criteria in the format: property,asc|desc (e.g., fieldName,asc)")
+                                                        .description("Sort criteria in the format: property,asc or property,desc. Multiple sort fields can be specified as comma-separated values (e.g., 'mobile,asc,name,desc').")
                                                         .required(false)
-                                                        .schema(new io.swagger.v3.oas.models.media.ArraySchema()
-                                                                .items(new io.swagger.v3.oas.models.media.StringSchema())));
+                                                        .schema(new io.swagger.v3.oas.models.media.StringSchema())
+                                                        .example("mobile,asc"));
                                 }
                         });
                 };

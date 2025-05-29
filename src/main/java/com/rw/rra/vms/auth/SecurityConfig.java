@@ -93,7 +93,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/v1/deductions").hasAnyRole("ADMIN", "MANAGER")
                                 .requestMatchers(HttpMethod.PUT, "/api/v1/deductions/{id}").hasAnyRole("ADMIN", "MANAGER")
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/deductions/{id}").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/api/v1/deductions/initialize").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/v1/deductions/initialize").hasAnyRole("ADMIN","MANAGER")
 
                                 // Payroll endpoints
                                 .requestMatchers(HttpMethod.GET, "/api/v1/payroll/payslips").hasAnyRole("ADMIN", "MANAGER")

@@ -20,10 +20,10 @@ public class DeductionService {
     private final DeductionRepository deductionRepository;
     private final DeductionMapper deductionMapper;
 
-    @Transactional(readOnly = true)
-    public List<DeductionResponseDTO> getAllDeductions() {
-        return deductionMapper.toResponseDTOList(deductionRepository.findAll());
-    }
+//    @Transactional(readOnly = true)
+//    public List<DeductionResponseDTO> getAllDeductions() {
+//        return deductionMapper.toResponseDTOList(deductionRepository.findAll());
+//    }
 
     @Transactional(readOnly = true)
     public Page<DeductionResponseDTO> getAllDeductions(Pageable pageable) {
@@ -45,11 +45,11 @@ public class DeductionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Deduction not found with name: " + name));
     }
 
-    @Transactional(readOnly = true)
-    public Page<DeductionResponseDTO> getDeductionsByNameContaining(String name, Pageable pageable) {
-        return deductionRepository.findByDeductionNameContaining(name, pageable)
-                .map(deductionMapper::toResponseDTO);
-    }
+//    @Transactional(readOnly = true)
+//    public Page<DeductionResponseDTO> getDeductionsByNameContaining(String name, Pageable pageable) {
+//        return deductionRepository.findByDeductionNameContaining(name, pageable)
+//                .map(deductionMapper::toResponseDTO);
+//    }
 
     @Transactional
     public DeductionResponseDTO createDeduction(DeductionRequestDTO deductionDTO) {
