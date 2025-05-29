@@ -5,19 +5,21 @@ import com.rw.rra.vms.users.DTO.RegisterRequestDTO;
 import com.rw.rra.vms.users.DTO.UserMapper;
 import com.rw.rra.vms.users.DTO.UserResponseDTO;
 
-import com.rw.rra.vms.vehicles.VehicleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,7 +29,6 @@ public class UserService {
 //    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final VehicleRepository vehicleRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -37,8 +38,9 @@ public class UserService {
 
         var newUser = userMapper.toEntity(user);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        newUser.setRole(Role.ROLE_ADMIN);
+        newUser.setRole(user.getRole()); // Use the role from RegisterRequestDTO
         newUser.setEnabled(false);
+        newUser.setStatus(UserStatus.ACTIVE); // Set status to ACTIVE by default
 
         userRepository.save(newUser);
         log.info("Registered new user: {}", newUser.getEmail());
@@ -68,11 +70,11 @@ public class UserService {
         userRepository.save(user);
     }
 
-//    public void updateUserStatus(String email, Status newStatus) {
-//        var user = findByEmail(email);
-//        user.setStatus(newStatus);
-//        userRepository.save(user);
-//    }
+    public void updateUserStatus(String email, UserStatus newStatus) {
+        var user = findByEmail(email);
+        user.setStatus(newStatus);
+        userRepository.save(user);
+    }
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new BadRequestException("User with that email not found."));
@@ -92,6 +94,37 @@ public class UserService {
 
     public UserResponseDTO getCurrentLoggedInUser() {
         return userMapper.toResponseDto(getAuthenticatedUser());
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserResponseDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toResponseDto)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserResponseDTO> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable)
+                .map(userMapper::toResponseDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserResponseDTO> getUsersByRole(Role role, Pageable pageable) {
+        return userRepository.findByRole(role, pageable)
+                .map(userMapper::toResponseDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserResponseDTO> getUsersByStatus(UserStatus status, Pageable pageable) {
+        return userRepository.findByStatus(status, pageable)
+                .map(userMapper::toResponseDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserResponseDTO> searchUsersByName(String searchTerm, Pageable pageable) {
+        return userRepository.findByFirstNameContainingOrLastNameContaining(searchTerm, searchTerm, pageable)
+                .map(userMapper::toResponseDto);
     }
 
 

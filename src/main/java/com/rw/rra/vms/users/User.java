@@ -3,6 +3,7 @@ package com.rw.rra.vms.users;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -40,6 +41,12 @@ public class User implements UserDetails {
 
     private String verificationToken;
     private String resetToken;
+
+    private LocalDate dateOfBirth;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserStatus status = UserStatus.ACTIVE;
 
     // UserDetails
     @Override public Collection<org.springframework.security.core.GrantedAuthority> getAuthorities() {

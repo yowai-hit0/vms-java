@@ -1,6 +1,7 @@
 package com.rw.rra.vms.users;
 
-import com.rw.rra.vms.users.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Override
     Optional<User> findById(UUID userId);
+
+    Page<User> findAll(Pageable pageable);
+    Page<User> findByRole(Role role, Pageable pageable);
+    Page<User> findByStatus(UserStatus status, Pageable pageable);
+    Page<User> findByFirstNameContainingOrLastNameContaining(String firstName, String lastName, Pageable pageable);
 }

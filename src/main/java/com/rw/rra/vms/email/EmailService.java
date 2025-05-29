@@ -101,6 +101,15 @@ public class EmailService {
         sendEmail("post_inspection_notification", ctx, to, "Vehicle Inspection Update");
     }
 
+    @Async
+    public void sendSalaryNotification(String to, String name, String message) {
+        Context ctx = new Context();
+        ctx.setVariable("name", name);
+        ctx.setVariable("message", message);
+        ctx.setVariable("companyName", "Rwanda Revenue Authority");
+        sendEmail("salary_notification", ctx, to, "Salary Notification");
+    }
+
     // Generic OTP email
     private void sendOtpEmail(String to, String name, String otp, OtpType type) {
         try {

@@ -11,12 +11,13 @@ import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 @OpenAPIDefinition(
         info = @Info(
                 title = "RRA Vehicle Tracking API",
                 version = "1.0",
-                description = "APIs for user, owner, plates, vehicles & transfers"
+                description = "APIs for Employee, payroll, employement, deduction"
         )
 )
 @Configuration
@@ -51,6 +52,10 @@ public class OpenApiConfig {
                                 if (path.startsWith("/api/") && pathItem.getGet() != null) {
                                         var getOperation = pathItem.getGet();
                                         // Remove any incorrect 'pageable' parameter
+                                        if (getOperation.getParameters() == null) {
+                                                getOperation.setParameters(new ArrayList<>());
+                                        }
+
                                         getOperation.getParameters().removeIf(param -> "pageable".equals(param.getName()));
                                         // Add page, size, and sort query parameters
                                         getOperation

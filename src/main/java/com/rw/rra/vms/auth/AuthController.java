@@ -8,6 +8,7 @@ import com.rw.rra.vms.email.EmailService;
 import com.rw.rra.vms.users.DTO.RegisterRequestDTO;
 import com.rw.rra.vms.users.DTO.UserResponseDTO;
 import com.rw.rra.vms.users.UserService;
+import com.rw.rra.vms.users.UserStatus;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -52,7 +53,7 @@ public class AuthController {
         userService.activateUserAccount(verifyAccountRequest.getEmail());
 
         var user = userService.findByEmail(verifyAccountRequest.getEmail());
-//        userService.updateUserStatus(user.getEmail(), Status.ACTIVE);
+        userService.updateUserStatus(user.getEmail(), UserStatus.ACTIVE);
 
         emailService.sendVerificationSuccessEmail(user.getEmail(), user.getFirstName());
 
@@ -64,7 +65,7 @@ public class AuthController {
     ResponseEntity<?> initiatePasswordReset(@Valid @RequestBody InitiatePassResetDTO initiateRequest){
         var otpToSend = otpService.generateOtp(initiateRequest.getEmail(), OtpType.FORGOT_PASSWORD);
         var user = userService.findByEmail(initiateRequest.getEmail());
-//        userService.updateUserStatus(user.getEmail(), Status.RESET);
+        userService.updateUserStatus(user.getEmail(), UserStatus.DISABLED);
         emailService.sendResetPasswordOtp(user.getEmail(), user.getFirstName(), otpToSend);
         return ResponseEntity.ok("If your email is registered, you will receive an email with instructions to reset your password.");
     }
@@ -84,7 +85,7 @@ public class AuthController {
         // Fetch user
         var user = userService.findByEmail(resetPasswordRequest.getEmail());
 
-//        userService.updateUserStatus(user.getEmail(), Status.ACTIVE);
+        userService.updateUserStatus(user.getEmail(), UserStatus.ACTIVE);
 
 
         // Send success email
